@@ -97,59 +97,68 @@ router.delete('/:id', auth, async (req, res) => {
 });
 
 //TODO: change to upvote downvote
-// @route PUT api/posts/like/:id
-// @desc  Like a post
+// @route PUT api/posts/upvote/:id
+// @desc  upvote a post
 // @access Private
-router.put('/like/:id', auth, async (req, res) => {
+router.put('/upvote/:id', auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 
     if (
-      post.likes.filter((like) => like.user.toString() === req.user.id).length >
-      0
+      post.upvotes.filter((upvote) => upvote.user.toString() === req.user.id)
+        .length > 0
     ) {
-      return res.status(400).json({ msg: 'Post is already liked' });
+      return res.status(400).json({ msg: 'Post is already upvoted' });
     }
+    //remove existing downvote
+    if (
+      post.downvotes.filter(
+        (downvote) => downvote.user.toString() === req.user.id
+      ).length > 0
+    ) {
+    }
+
     // unshift === push to beginning
-    post.likes.unshift({ user: req.user.id });
+    post.upvotes.unshift({ user: req.user.id });
 
     await post.save();
 
-    res.json(post.likes);
+    res.json(post.upvotes);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
 });
 
-// @route PUT api/posts/like/:id
-// @desc  Unlike a post
+// @route PUT api/posts/downvote/:id
+// @desc  Undownvote a post
 // @access Private
-router.put('/unlike/:id', auth, async (req, res) => {
+router.put('/downvote/:id', auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 
     if (
-      post.likes.filter((like) => like.user.toString() === req.user.id)
-        .length === 0
+      post.downvotes.filter(
+        (downvote) => downvote.user.toString() === req.user.id
+      ).length === 0
     ) {
-      return res.status(400).json({ msg: 'Post is not liked' });
+      return res.status(400).json({ msg: 'Post is not downvoted' });
     }
 
-    // remove like
-    // const removeIndex = post.likes
-    //   .map((like) => like.user.toString())
+    // remove upvote
+    // const removeIndex = post.upvotes
+    //   .map((upvote) => upvote.user.toString())
     //   .indexOf(req.user.id);
 
-    // posts.likes.splice(removeIndex, 1);
+    // posts.upvotes.splice(removeIndex, 1);
 
-    post.likes = post.likes.filter(
-      (like) => like.user.toString() !== req.user.id
+    post.upvotes = post.upvotes.filter(
+      (upvote) => upvote.user.toString() !== req.user.id
     );
 
     await post.save();
 
-    res.json(post.likes);
+    res.json(post.upvotes);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
