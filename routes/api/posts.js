@@ -110,12 +110,16 @@ router.put('/upvote/:id', auth, async (req, res) => {
     ) {
       return res.status(400).json({ msg: 'Post is already upvoted' });
     }
+
     //remove existing downvote
     if (
       post.downvotes.filter(
         (downvote) => downvote.user.toString() === req.user.id
       ).length > 0
     ) {
+      post.downvotes = post.downvotes.filter(
+        (vote) => vote.user.toString() !== req.user.id
+      );
     }
 
     // unshift === push to beginning
@@ -140,25 +144,26 @@ router.put('/downvote/:id', auth, async (req, res) => {
     if (
       post.downvotes.filter(
         (downvote) => downvote.user.toString() === req.user.id
-      ).length === 0
+      ).length > 0
     ) {
-      return res.status(400).json({ msg: 'Post is not downvoted' });
+      return res.status(400).json({ msg: 'Post is already downvoted' });
     }
 
-    // remove upvote
-    // const removeIndex = post.upvotes
-    //   .map((upvote) => upvote.user.toString())
-    //   .indexOf(req.user.id);
+    //remove existing upvote
+    if (
+      post.upvotes.filter((upvote) => upvote.user.toString() === req.user.id)
+        .length > 0
+    ) {
+      post.upvotes = post.upvotes.filter(
+        (vote) => vote.user.toString() !== req.user.id
+      );
+    }
 
-    // posts.upvotes.splice(removeIndex, 1);
-
-    post.upvotes = post.upvotes.filter(
-      (upvote) => upvote.user.toString() !== req.user.id
-    );
+    post.downvotes.unshift({ user: req.user.id });
 
     await post.save();
 
-    res.json(post.upvotes);
+    res.json(post.downvotes);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');

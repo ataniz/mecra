@@ -1,17 +1,15 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const ProfileSchema = new mongoose.Schema({
+const ProfileSchema = new Schema({
   user: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'user',
   },
   username: {
     type: String,
     required: true,
     unique: true,
-  },
-  website: {
-    type: String,
   },
   status: {
     type: String,
@@ -48,6 +46,30 @@ const ProfileSchema = new mongoose.Schema({
       type: String,
     },
   },
+  following: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: 'users',
+      },
+    },
+  ],
+  followers: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: 'users',
+      },
+    },
+  ],
+  forums: [
+    {
+      forum: {
+        type: Schema.Types.ObjectId,
+        ref: 'forums',
+      },
+    },
+  ],
   date: {
     type: Date,
     default: Date.now,

@@ -3,8 +3,10 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
 const User = require('../../models/User');
+const Profile = require('../../models/Profile');
 const Post = require('../../models/Post');
 const Forum = require('../../models/Forum');
+const { rawListeners } = require('../../models/User');
 
 // @route POST api/forums
 // @desc  Create a forum
@@ -129,9 +131,20 @@ router.put('/join/:id', auth, async (req, res) => {
     ) {
       return res.status(400).json({ msg: 'Already joined' });
     }
+    //add forum to users profile
+    const profile = await Profile.findOne({
+      user: req.user.id,
+    });
+
+    if (!profile) {
+      return res.status(400).json({ msg: 'User has no profile!' });
+    }
+    profile.forums.unshift({ forum: req.params.id });
+
     // unshift === push to beginning
     forum.members.unshift({ user: req.user.id });
 
+    await profile.save();
     await forum.save();
 
     res.json(forum.members);
@@ -155,10 +168,25 @@ router.put('/leave/:id', auth, async (req, res) => {
       return res.status(400).json({ msg: 'Youre not a member!' });
     }
 
+    //remove forum from users profile
+    //add forum to users profile
+    const profile = await Profile.findOne({
+      user: req.user.id,
+    });
+
+    if (!profile) {
+      return res.status(400).json({ msg: 'User has no profile!' });
+    }
+
+    profile.forums = profile.forums.filter(
+      (obj) => obj.forum.toString() !== req.params.id
+    );
+
     forum.members = forum.members.filter(
       (member) => member.user.toString() !== req.user.id
     );
 
+    await profile.save();
     await forum.save();
 
     res.json(forum.members);
