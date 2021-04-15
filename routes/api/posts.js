@@ -30,6 +30,18 @@ router.post(
 
       const post = await newPost.save();
 
+      //add the post to users profile
+      const profile = await Profile.findOne({
+        user: req.user.id,
+      });
+
+      if (!profile) {
+        return res.status(400).json({ msg: 'User has no profile!' });
+      }
+      profile.posts.unshift({ post: post.id });
+
+      await profile.save();
+
       res.json(post);
     } catch (err) {
       console.error(err.message);
@@ -96,7 +108,6 @@ router.delete('/:id', auth, async (req, res) => {
   }
 });
 
-//TODO: change to upvote downvote
 // @route PUT api/posts/upvote/:id
 // @desc  upvote a post
 // @access Private

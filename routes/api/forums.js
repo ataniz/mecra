@@ -56,6 +56,52 @@ router.post(
   }
 );
 
+// @route PUT api/forums
+// @desc  Update a forum
+// @access Private
+router.put(
+  '/',
+  [
+    auth,
+    [
+      check('name', 'Name is required').not().isEmpty(),
+      check('info', "Without information trees don't grow").not().isEmpty(),
+    ],
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { name, info, rules } = req.body;
+
+    try {
+      let forum = await Forum.findOne({ name });
+
+      if (!forum) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: 'Forum doesnt exist' }] });
+      }
+
+      forum = new Forum({
+        name,
+        user: req.user.id,
+        info,
+        rules,
+      });
+
+      forum.save();
+
+      res.json(forum);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
 // @route GET api/forums
 // @desc  Get all forums
 // @access Public

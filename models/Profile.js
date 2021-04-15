@@ -70,6 +70,14 @@ const ProfileSchema = new Schema({
       },
     },
   ],
+  posts: [
+    {
+      post: {
+        type: Schema.Types.ObjectId,
+        ref: 'posts',
+      },
+    },
+  ],
   date: {
     type: Date,
     default: Date.now,
