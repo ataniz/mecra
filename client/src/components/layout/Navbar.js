@@ -7,7 +7,9 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 const NavBar = () => {
   return (
     <Navbar bg="dark" variant="dark" className="py-1">
-      <Navbar.Brand href="/">MECRA</Navbar.Brand>
+      <Navbar.Brand href="/" style={{ color: '#ffafcc' }}>
+        MECRA
+      </Navbar.Brand>
       <Form inline className="ml-2">
         <FormControl
           type="text"
