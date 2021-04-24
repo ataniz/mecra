@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, Fragment } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -60,12 +60,14 @@ const Login = ({ login, isAuthenticated }) => {
             required
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Giriş Yap
-        </Button>
-        <p className="mt-2">
-          <Link to="/register">Mecra'ya Kaydol</Link>
-        </p>
+        <Form.Row className="m-auto">
+          <Button variant="primary" type="submit">
+            Giriş Yap
+          </Button>
+          <p className="ml-2 my-auto">
+            <Link to="/register">Mecra'ya Kaydol</Link>
+          </p>
+        </Form.Row>
       </Form>
     </Card>
   );
