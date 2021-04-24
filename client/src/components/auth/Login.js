@@ -1,10 +1,13 @@
 import { React, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { login } from '../../actions/auth';
 import { Form, Button, Card, Container, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserAstronaut } from '@fortawesome/free-solid-svg-icons';
 
-const Login = () => {
+const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -15,9 +18,15 @@ const Login = () => {
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    login({ email, password });
   };
+
+  // redirect if logged in
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <Card className="mt-4 border-0">
@@ -30,7 +39,7 @@ const Login = () => {
           <h1 style={{ color: 'black', marginLeft: '2rem' }}>Kaydol</h1>
         </Row>
       </Container>
-      <Form className="mt-4" onSubmit={onSubmit}>
+      <Form className="mt-4" onSubmit={(e) => onSubmit(e)}>
         <Form.Group controlId="formBasicEmail">
           <Form.Control
             type="email"
@@ -62,4 +71,13 @@ const Login = () => {
   );
 };
 
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { login })(Login);
