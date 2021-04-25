@@ -6,27 +6,34 @@ import { logout } from '../../actions/auth';
 import { Button } from 'react-bootstrap';
 import { Navbar, Nav, Form, FormControl } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSearch,
+  faSignOutAlt,
+  faUserAlt,
+} from '@fortawesome/free-solid-svg-icons';
 
 const NavBar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const authLinks = (
-    <Nav className="ml-auto">
+    <Fragment>
+      <Nav.Link href="/dashboard" className="mr-2">
+        <FontAwesomeIcon icon={faUserAlt} />
+      </Nav.Link>
       <Nav.Link onClick={logout} href="#!" className="mr-2">
         <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
         Çıkış Yap
       </Nav.Link>
-    </Nav>
+    </Fragment>
   );
-
+  // TODO: BUG! Clicks to guestlink at same loc as logout after logging out
   const guestLinks = (
-    <Nav className="ml-auto">
+    <Fragment>
       <Nav.Link href="/login" className="mr-2">
         Giriş Yap
       </Nav.Link>
       <Nav.Link href="/register" className="mr-2">
         Kaydol
       </Nav.Link>
-    </Nav>
+    </Fragment>
   );
 
   return (
@@ -45,9 +52,9 @@ const NavBar = ({ auth: { isAuthenticated, loading }, logout }) => {
           <FontAwesomeIcon icon={faSearch} />
         </Button>
       </Form>
-      {!loading && (
-        <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
-      )}
+      <Nav className="ml-auto">
+        {!loading && isAuthenticated ? authLinks : guestLinks}
+      </Nav>
     </Navbar>
   );
 };
