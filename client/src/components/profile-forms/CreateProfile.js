@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { Form, Row, Col, Button, InputGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserAstronaut } from '@fortawesome/free-solid-svg-icons';
+import {
+  faFacebookSquare,
+  faTwitterSquare,
+  faYoutubeSquare,
+  faInstagramSquare,
+} from '@fortawesome/free-brands-svg-icons';
 
 const CreateProfile = (props) => {
   const [fromData, setFormData] = useState({
@@ -54,30 +59,54 @@ const CreateProfile = (props) => {
           <option>Kars</option>
         </Form.Control>
       </Form.Group>
-      <Button small>Sosyal Linkler</Button>
+      <Button onClick={() => toggleSocialInputs(!displaySocialInputs)}>
+        Sosyal Linkler
+      </Button>
 
-      <Form.Row className="mt-3">
-        <InputGroup as={Col} className="mt-2">
-          <InputGroup.Prepend>
-            <InputGroup.Text>
-              <FontAwesomeIcon icon={faUserAstronaut} />
-            </InputGroup.Text>
-          </InputGroup.Prepend>
-          <Form.Control placeholder="Twitter URL" type="text" />
-        </InputGroup>
+      {displaySocialInputs && (
+        <Fragment>
+          <InputGroup as={Row} className="mt-2 p-2">
+            <InputGroup.Prepend>
+              <FontAwesomeIcon
+                icon={faTwitterSquare}
+                className="my-auto mx-2"
+                size="2x"
+              />
+            </InputGroup.Prepend>
+            <Form.Control placeholder="Twitter URL" type="text" />
 
-        <Form.Group as={Col} className="mt-2">
-          <Form.Control placeholder="Youtube URL" type="text" />
-        </Form.Group>
-      </Form.Row>
-      <Form.Row className=" p-2">
-        <Form.Group as={Col} className="mt-2">
-          <Form.Control placeholder="Instagram URL" type="text" />
-        </Form.Group>
-        <Form.Group as={Col} className="mt-2">
-          <Form.Control placeholder="Facebook URL" type="text" />
-        </Form.Group>
-      </Form.Row>
+            <InputGroup.Prepend>
+              <FontAwesomeIcon
+                icon={faYoutubeSquare}
+                className="my-auto mx-2"
+                size="2x"
+              />
+            </InputGroup.Prepend>
+            <Form.Control placeholder="Youtube URL" type="text" />
+          </InputGroup>
+
+          <InputGroup as={Row} className="p-2">
+            <InputGroup.Prepend>
+              <FontAwesomeIcon
+                icon={faInstagramSquare}
+                className="my-auto mx-2"
+                size="2x"
+              />
+            </InputGroup.Prepend>
+            <Form.Control placeholder="Instagram URL" type="text" />
+
+            <InputGroup.Prepend>
+              <FontAwesomeIcon
+                icon={faFacebookSquare}
+                className="my-auto mx-2"
+                size="2x"
+              />
+            </InputGroup.Prepend>
+            <Form.Control placeholder="Facebook URL" type="text" />
+          </InputGroup>
+        </Fragment>
+      )}
+
       <Button variant="primary" type="submit">
         Submit
       </Button>
