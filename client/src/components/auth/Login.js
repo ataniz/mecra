@@ -36,7 +36,9 @@ const Login = ({ login, isAuthenticated }) => {
       >
         <Row>
           <FontAwesomeIcon icon={faUserAstronaut} size="4x" />
-          <h1 style={{ color: 'black', marginLeft: '2rem' }}>Kaydol</h1>
+          <h1 style={{ color: 'black', marginLeft: '2rem' }}>
+            Mecra'ya Giriş Yap
+          </h1>
         </Row>
       </Container>
       <Form className="mt-4" onSubmit={(e) => onSubmit(e)}>

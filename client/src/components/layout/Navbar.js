@@ -18,7 +18,7 @@ const NavBar = ({ auth: { isAuthenticated, loading }, logout }) => {
       <Nav.Link href="/dashboard" className="mr-2">
         <FontAwesomeIcon icon={faUserAlt} />
       </Nav.Link>
-      <Nav.Link onClick={logout} href="#!" className="mr-2">
+      <Nav.Link onClick={logout} href="/" className="mr-2">
         <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
         Çıkış Yap
       </Nav.Link>
@@ -27,11 +27,11 @@ const NavBar = ({ auth: { isAuthenticated, loading }, logout }) => {
   // TODO: BUG! Clicks to guestlink at same loc as logout after logging out
   const guestLinks = (
     <Fragment>
-      <Nav.Link href="/login" className="mr-2">
-        Giriş Yap
-      </Nav.Link>
       <Nav.Link href="/register" className="mr-2">
         Kaydol
+      </Nav.Link>
+      <Nav.Link href="/login" className="mr-2">
+        Giriş Yap
       </Nav.Link>
     </Fragment>
   );
