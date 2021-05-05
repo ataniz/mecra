@@ -177,7 +177,7 @@ const CreateProfile = ({ createProfile, history }) => {
       <Button variant="primary" type="submit" className=" mr-2">
         Kaydet
       </Button>
-      <Button variant="secondary" type="submit">
+      <Button variant="secondary" type="submit" href="/dashboard">
         Geri Dön{''}
       </Button>
     </Form>

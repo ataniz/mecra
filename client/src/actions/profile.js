@@ -6,7 +6,7 @@ import { GET_PROFILE, PROFILE_ERROR } from './types';
 // Get current users profile
 export const getCurrentProfile = () => async (dispatch) => {
   try {
-    const res = await axios.get('api/profile/me');
+    const res = await axios.get('/api/profile/me');
 
     dispatch({
       type: GET_PROFILE,
@@ -38,7 +38,9 @@ export const createProfile = (formData, history, edit = false) => async (
       payload: res.data,
     });
 
-    dispatch(setAlert(edit ? 'Profil Kaydedildi' : 'Profil Oluşturuldu'));
+    dispatch(
+      setAlert(edit ? 'Profil Kaydedildi' : 'Profil Oluşturuldu', 'success')
+    );
 
     if (!edit) {
       history.push('/dashboard');

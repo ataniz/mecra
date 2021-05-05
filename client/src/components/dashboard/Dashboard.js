@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import LoaderRhombus from '../layout/loaders/LoaderRhombus';
 import { getCurrentProfile } from '../../actions/profile';
+import DashboardActions from './DashboardActions';
 
 const Dashboard = ({
   getCurrentProfile,
@@ -12,7 +13,7 @@ const Dashboard = ({
 }) => {
   useEffect(() => {
     getCurrentProfile();
-  }, []);
+  }, [getCurrentProfile]);
 
   return loading && profile === null ? (
     <LoaderRhombus />
@@ -20,7 +21,7 @@ const Dashboard = ({
     <Fragment>
       <h1 className="mt-2">Merhaba {user && user.name}</h1>
       {profile !== null ? (
-        <Fragment> var </Fragment>
+        <DashboardActions />
       ) : (
         <Fragment>
           <p>Buralar pek tenha</p>
@@ -41,4 +42,5 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
   profile: state.profile,
 });
+
 export default connect(mapStateToProps, { getCurrentProfile })(Dashboard);
