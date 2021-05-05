@@ -41,7 +41,7 @@ export const createProfile = (formData, history, edit = false) => async (
     dispatch(
       setAlert(edit ? 'Profil Kaydedildi' : 'Profil Oluşturuldu', 'success')
     );
-
+    // editten sonra donmesini istersen bunu degistir
     if (!edit) {
       history.push('/dashboard');
     }

@@ -1,14 +1,15 @@
 import React from 'react';
+import { Fragment } from 'react';
 
 import { Button } from 'react-bootstrap';
 
 const DashboardActions = () => {
   return (
-    <Button.Group>
+    <Fragment>
       <Button href="/edit-profile">Profil Güncelle</Button>
       <Button href="/create-post">Makale Yaz</Button>
       <Button>Kendini Bil</Button>
-    </Button.Group>
+    </Fragment>
   );
 };
 
