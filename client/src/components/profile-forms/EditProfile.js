@@ -35,7 +35,6 @@ const EditProfile = ({
     bio: '',
     twitter: '',
     facebook: '',
-
     youtube: '',
     instagram: '',
   });
@@ -50,10 +49,8 @@ const EditProfile = ({
       status: loading || !profile.status ? '' : profile.status,
       location: loading || !profile.location ? '' : profile.location,
       bio: loading || !profile.bio ? '' : profile.bio,
-
       twitter: loading || !profile.social ? '' : profile.social.twitter,
       facebook: loading || !profile.social ? '' : profile.social.facebook,
-
       youtube: loading || !profile.social ? '' : profile.social.youtube,
       instagram: loading || !profile.social ? '' : profile.social.instagram,
     });

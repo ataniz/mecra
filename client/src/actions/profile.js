@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { setAlert } from './alert';
 
-import { GET_PROFILE, PROFILE_ERROR } from './types';
+import { GET_PROFILE, UPDATE_PROFILE, PROFILE_ERROR } from './types';
 
 // Get current users profile
 export const getCurrentProfile = () => async (dispatch) => {
@@ -32,19 +32,23 @@ export const createProfile = (formData, history, edit = false) => async (
     };
 
     const res = await axios.post('/api/profile', formData, config);
-
-    dispatch({
-      type: GET_PROFILE,
-      payload: res.data,
-    });
+    if (!edit) {
+      dispatch({
+        type: GET_PROFILE,
+        payload: res.data,
+      });
+      // editten sonra dashboarda donmesini istersen bunu degistir
+      history.push('/dashboard');
+    } else {
+      dispatch({
+        type: UPDATE_PROFILE,
+        payload: res.data,
+      });
+    }
 
     dispatch(
       setAlert(edit ? 'Profil Kaydedildi' : 'Profil Oluşturuldu', 'success')
     );
-    // editten sonra donmesini istersen bunu degistir
-    if (!edit) {
-      history.push('/dashboard');
-    }
   } catch (err) {
     const errors = err.response.data.errors;
 

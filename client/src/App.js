@@ -11,6 +11,7 @@ import PrivateRoute from './components/routing/PrivateRoute';
 import setAuthToken from './utils/setAuthToken';
 import CreateProfile from './components/profile-forms/CreateProfile';
 import EditProfile from './components/profile-forms/EditProfile';
+import CreatePost from './components/text-editor/CreatePost';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -50,6 +51,7 @@ const App = () => {
                 path="/edit-profile"
                 component={EditProfile}
               />
+              <PrivateRoute exact path="/create-post" component={CreatePost} />
             </Switch>
           </section>
         </Fragment>
