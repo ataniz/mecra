@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { DraftailEditor } from 'draftail';
-import { EditorState } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import createInlineToolbarPlugin from 'draft-js-inline-toolbar-plugin';
 import createSideToolbarPlugin from 'draft-js-side-toolbar-plugin';
+import { Link, withRouter } from 'react-router-dom';
+import { Form, Button } from 'react-bootstrap';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createPost } from '../../actions/post';
+
 import './CreatePost.css';
 import 'draft-js/dist/Draft.css';
 import 'draftail/dist/draftail.css';
@@ -15,13 +21,23 @@ const sideToolbarPlugin = createSideToolbarPlugin();
 const { SideToolbar } = sideToolbarPlugin;
 const plugins = [inlineToolbarPlugin, sideToolbarPlugin];
 
-const CreatePost = () => {
+const CreatePost = ({ createPost }) => {
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const contentState = editorState.getCurrentContent();
+    const rawContent = JSON.stringify(convertToRaw(contentState));
+    createPost(rawContent);
+  };
+
   return (
-    <div className="CreatePost">
+    <Form className="PostEditor" onSubmit={(e) => onSubmit(e)}>
+      <Button variant="primary" type="submit" className=" mr-2">
+        Kaydet
+      </Button>
       <DraftailEditor
         editorState={editorState}
         onChange={setEditorState}
@@ -30,38 +46,12 @@ const CreatePost = () => {
       />
       <InlineToolbar />
       <SideToolbar />
-    </div>
+    </Form>
   );
 };
 
-export default CreatePost;
+CreatePost.propTypes = {
+  createPost: PropTypes.func.isRequired,
+};
 
-// class App extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       editorState: EditorState.createEmpty(),
-//     };
-//     this.changeState = this.changeState.bind(this);
-//   }
-//   changeState(state) {
-//     this.setState({
-//       editorState: state,
-//     });
-//   }
-//   render() {
-//     return (
-//       <div className="App">
-//         <DraftailEditor
-//           editorState={this.state.editorState}
-//           onChange={this.changeState}
-//           placeholder="Tell your story..."
-//           plugins={plugins}
-//         />
-//         <InlineToolbar />
-//         <SideToolbar />
-//       </div>
-//     );
-//   }
-// }
-// export default App;
+export default connect(null, { createPost })(withRouter(CreatePost));
