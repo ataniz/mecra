@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import LoaderRhombus from '../layout/loaders/LoaderRhombus';
+import LoaderPendulum from '../layout/loaders/LoaderPendulum';
 import { getCurrentProfile, deleteAccount } from '../../actions/profile';
 import DashboardActions from './DashboardActions';
 import { Button } from 'react-bootstrap';
@@ -18,7 +18,7 @@ const Dashboard = ({
   }, [getCurrentProfile]);
 
   return loading && profile === null ? (
-    <LoaderRhombus />
+    <LoaderPendulum />
   ) : (
     <Fragment>
       <h1 className="mt-2">Merhaba {user && user.name}</h1>

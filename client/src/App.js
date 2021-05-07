@@ -12,6 +12,7 @@ import setAuthToken from './utils/setAuthToken';
 import CreateProfile from './components/profile-forms/CreateProfile';
 import EditProfile from './components/profile-forms/EditProfile';
 import CreatePost from './components/text-editor/CreatePost';
+import Profiles from './components/profiles/Profiles';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -40,6 +41,7 @@ const App = () => {
               <Route exact path="/" component={Landing} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/profiles" component={Profiles} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute
                 exact

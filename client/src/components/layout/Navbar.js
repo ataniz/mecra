@@ -10,6 +10,7 @@ import {
   faSearch,
   faSignOutAlt,
   faUserAlt,
+  faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 
 const NavBar = ({ auth: { isAuthenticated, loading }, logout }) => {
@@ -53,6 +54,9 @@ const NavBar = ({ auth: { isAuthenticated, loading }, logout }) => {
         </Button>
       </Form>
       <Nav className="ml-auto">
+        <Nav.Link href="/profiles" className="mr-2">
+          <FontAwesomeIcon icon={faUsers} />
+        </Nav.Link>
         {!loading && isAuthenticated ? authLinks : guestLinks}
       </Nav>
     </Navbar>

@@ -1,16 +1,16 @@
 /* eslint-disable import/no-anonymous-default-export */
 import React, { Fragment } from 'react';
-import book from '../gifs/Rhombus.gif';
+import pendulum from '../gifs/pendulum-black.gif';
 
 export default () => (
   <Fragment>
     <img
-      src={book}
+      src={pendulum}
       style={{
         width: '70px',
         margin: 'auto',
         display: 'block',
-        marginTop: '2rem',
+        marginTop: '8rem',
       }}
       alt="Loading..."
     />
