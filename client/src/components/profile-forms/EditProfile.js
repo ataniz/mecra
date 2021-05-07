@@ -1,19 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createProfile } from '../../actions/profile';
 import { getCurrentProfile } from '../../actions/profile';
 
-import {
-  Form,
-  Col,
-  Row,
-  Button,
-  InputGroup,
-  Container,
-  Dropdown,
-} from 'react-bootstrap';
+import { Form, Row, Button, InputGroup, Container } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFacebookSquare,

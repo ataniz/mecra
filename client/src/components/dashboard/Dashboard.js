@@ -3,17 +3,19 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import LoaderRhombus from '../layout/loaders/LoaderRhombus';
-import { getCurrentProfile } from '../../actions/profile';
+import { getCurrentProfile, deleteAccount } from '../../actions/profile';
 import DashboardActions from './DashboardActions';
+import { Button } from 'react-bootstrap';
 
 const Dashboard = ({
   getCurrentProfile,
+  deleteAccount,
   auth: { user },
   profile: { profile, loading },
 }) => {
   useEffect(() => {
     getCurrentProfile();
-  }, []);
+  }, [getCurrentProfile]);
 
   return loading && profile === null ? (
     <LoaderRhombus />
@@ -21,7 +23,12 @@ const Dashboard = ({
     <Fragment>
       <h1 className="mt-2">Merhaba {user && user.name}</h1>
       {profile !== null ? (
-        <DashboardActions />
+        <Fragment>
+          <DashboardActions />
+          <Button variant="danger" onClick={() => deleteAccount()}>
+            Hesabı Sil
+          </Button>
+        </Fragment>
       ) : (
         <Fragment>
           <p>Buralar pek tenha</p>
@@ -43,4 +50,6 @@ const mapStateToProps = (state) => ({
   profile: state.profile,
 });
 
-export default connect(mapStateToProps, { getCurrentProfile })(Dashboard);
+export default connect(mapStateToProps, { getCurrentProfile, deleteAccount })(
+  Dashboard
+);
