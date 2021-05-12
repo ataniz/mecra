@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-const ProfilePosts = (props) => {
-  return <div></div>;
+import { Row, Col, Image } from 'react-bootstrap';
+import PostCard from '../posts/PostCard';
+
+const ProfilePosts = ({ profile: { forums, posts } }) => {
+  return (
+    <Col>
+      {posts.length > 0 ? (
+        posts.map((post, index) => <PostCard key={index} post={post} />)
+      ) : (
+        <h4>hic postu yok</h4>
+      )}
+    </Col>
+  );
 };
 
-ProfilePosts.propTypes = {};
+ProfilePosts.propTypes = { profile: PropTypes.object.isRequired };
 
 export default ProfilePosts;

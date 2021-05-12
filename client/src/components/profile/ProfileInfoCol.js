@@ -42,7 +42,7 @@ const ProfileInfoCol = ({
         ) : (
           <Fragment>
             <FontAwesomeIcon icon={faSadTear} className="my-auto" />
-            <p>Kimseyi Takip Etmiyor</p>
+            <h4>Kimseyi Takip Etmiyor</h4>
           </Fragment>
         )}
       </Row>
@@ -59,7 +59,7 @@ const ProfileInfoCol = ({
         ) : (
           <Fragment>
             <FontAwesomeIcon icon={faSadCry} className="my-auto" />
-            <p>Kimse onu Takip Etmiyor</p>
+            <h4>Kimse onu Takip Etmiyor</h4>
           </Fragment>
         )}
       </Row>
