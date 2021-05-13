@@ -38,7 +38,7 @@ export const getPosts = (props) => async (dispatch) => {
 
 // Create or update post
 export const createPost =
-  (rawState, edit = false) =>
+  (title, rawState, edit = false) =>
   async (dispatch) => {
     try {
       const config = {
@@ -47,7 +47,7 @@ export const createPost =
         },
       };
 
-      const res = await axios.post('/api/posts', rawState, config);
+      const res = await axios.post('/api/posts', title, rawState, config);
 
       if (!edit) {
         dispatch({

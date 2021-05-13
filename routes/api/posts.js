@@ -20,8 +20,10 @@ router.post('/', [auth], async (req, res) => {
 
     const newPost = new Post({
       state: req.body,
+      // title: req.title,
       name: user.name,
       user: req.user.id,
+      avatar: user.avatar,
     });
 
     const post = await newPost.save();
@@ -34,6 +36,7 @@ router.post('/', [auth], async (req, res) => {
     if (!profile) {
       return res.status(400).json({ msg: 'User has no profile!' });
     }
+
     profile.posts.unshift({ post: post.id });
 
     await profile.save();
