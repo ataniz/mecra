@@ -11,6 +11,8 @@ import {
   faSignOutAlt,
   faUserAlt,
   faUsers,
+  faQuoteLeft,
+  faQuoteRight,
 } from '@fortawesome/free-solid-svg-icons';
 
 const NavBar = ({ auth: { isAuthenticated, loading }, logout }) => {
@@ -54,6 +56,13 @@ const NavBar = ({ auth: { isAuthenticated, loading }, logout }) => {
         </Button>
       </Form>
       <Nav className="ml-auto">
+        <Nav.Link href="/posts" className="mr-2">
+          <FontAwesomeIcon icon={faQuoteLeft} />
+          {'   '}
+          Yazılar
+          {'   '}
+          <FontAwesomeIcon icon={faQuoteRight} />
+        </Nav.Link>
         <Nav.Link href="/profiles" className="mr-2">
           <FontAwesomeIcon icon={faUsers} />
         </Nav.Link>

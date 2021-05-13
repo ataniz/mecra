@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import { Row, Col, Image } from 'react-bootstrap';
-import PostCard from '../posts/PostCard';
+import PostCard from '../posts/PostItem';
 
 const ProfilePosts = ({ profile: { forums, posts } }) => {
   return (

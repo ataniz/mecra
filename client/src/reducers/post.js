@@ -1,6 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 import {
   GET_POST,
+  GET_POSTS,
   UPDATE_POST,
   POST_ERROR,
   CLEAR_POST,
@@ -22,6 +23,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         post: payload,
+        loading: false,
+      };
+    case GET_POSTS:
+      return {
+        ...state,
+        posts: payload,
         loading: false,
       };
     case POST_ERROR:
