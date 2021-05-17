@@ -21,3 +21,6 @@ export const CREATE_POST = 'CREATE_POST';
 export const POST_ERROR = 'POST_ERROR';
 export const ACCOUNT_DELETED = 'ACCOUNT_DELETED';
 export const UPDATE_VOTES = 'UPDATE_VOTES';
+export const ADD_COMMENT = 'ADD_COMMENT';
+export const DELETE_COMMENT = 'DELETE_COMMENT';
+export const UPDATE_COMMENT = 'UPDATE_COMMENT';

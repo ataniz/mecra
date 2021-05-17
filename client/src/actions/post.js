@@ -8,6 +8,9 @@ import {
   CREATE_POST,
   POST_ERROR,
   UPDATE_VOTES,
+  CREATE_COMMENT,
+  UPDATE_COMMENT,
+  DELETE_COMMENT,
 } from './types';
 
 // Get a post by id
@@ -123,7 +126,7 @@ export const createPost =
 // Delete Post
 export const deletePost = (id) => async (dispatch) => {
   try {
-    const res = await axios.delete(`/api/posts/${id}`);
+    await axios.delete(`/api/posts/${id}`);
 
     dispatch({
       type: DELETE_POST,
@@ -131,6 +134,54 @@ export const deletePost = (id) => async (dispatch) => {
     });
 
     dispatch(setAlert('Postunuz silindi', 'success'));
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Add comment
+export const addComment = (id, formData) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  try {
+    const res = await axios.post(`/api/posts/comment/${id}`, fromData, config);
+
+    dispatch({
+      type: ADD_COMMENT,
+      payload: res.data,
+    });
+
+    dispatch(setAlert('Yorum Eklendi', 'success'));
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Add comment
+export const deleteComment = (id, commentId) => async (dispatch) => {
+  try {
+    const res = await axios.delete(
+      `/api/posts/comment/${id}/${commentId}`,
+      fromData,
+      config
+    );
+
+    dispatch({
+      type: REMOVE_COMMENT,
+      payload: commentId,
+    });
+
+    dispatch(setAlert('Yorum Kaldırıldı', 'success'));
   } catch (err) {
     dispatch({
       type: POST_ERROR,
