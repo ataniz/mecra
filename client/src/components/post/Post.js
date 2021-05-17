@@ -5,6 +5,7 @@ import Pendulum from '../layout/loaders/LoaderPendulum';
 import { getPost } from '../../actions/post';
 
 import CommentForm from './CommentForm';
+import CommentItem from './CommentItem';
 
 const Post = ({ getPost, post: { post, loading }, match }) => {
   useEffect(() => {
@@ -16,6 +17,9 @@ const Post = ({ getPost, post: { post, loading }, match }) => {
     <Fragment>
       Buraya post display elementi gelicek
       <CommentForm postId={post._id} />
+      {post.comments.map((comment) => (
+        <CommentItem key={comment._id} comment={comment} postId={post._id} />
+      ))}
     </Fragment>
   );
 };
