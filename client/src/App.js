@@ -15,6 +15,7 @@ import CreatePost from './components/text-editor/CreatePost';
 import Profiles from './components/profiles/Profiles';
 import Profile from './components/profile/Profile';
 import Posts from './components/posts/Posts';
+import Post from './components/post/Post';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -58,6 +59,7 @@ const App = () => {
               />
               <PrivateRoute exact path="/create-post" component={CreatePost} />
               <Route exact path="/posts" component={Posts} />
+              <Route exact path="/posts/:id" component={Post} />
             </Switch>
           </section>
         </Fragment>

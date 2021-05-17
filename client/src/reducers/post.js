@@ -3,6 +3,7 @@ import {
   GET_POST,
   GET_POSTS,
   UPDATE_POST,
+  DELETE_POST,
   UPDATE_VOTES,
   POST_ERROR,
   CLEAR_POST,
@@ -24,6 +25,18 @@ export default function (state = initialState, action) {
       return {
         ...state,
         post: payload,
+        loading: false,
+      };
+    case CREATE_POST:
+      return {
+        ...state,
+        posts: [payload, ...state.posts],
+        loading: false,
+      };
+    case DELETE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter((post) => post._id !== payload),
         loading: false,
       };
     case GET_POSTS:

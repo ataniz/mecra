@@ -4,12 +4,14 @@ import {
   GET_POST,
   GET_POSTS,
   UPDATE_POST,
+  DELETE_POST,
+  CREATE_POST,
   POST_ERROR,
   UPDATE_VOTES,
 } from './types';
 
 // Get a post by id
-export const getPostById = (id) => async (dispatch) => {
+export const getPost = (id) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/posts/${id}`);
 
@@ -91,7 +93,7 @@ export const createPost =
 
       if (!edit) {
         dispatch({
-          type: GET_POST,
+          type: CREATE_POST,
           payload: res.data,
         });
       } else {
@@ -117,3 +119,22 @@ export const createPost =
       });
     }
   };
+
+// Delete Post
+export const deletePost = (id) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`/api/posts/${id}`);
+
+    dispatch({
+      type: DELETE_POST,
+      payload: id,
+    });
+
+    dispatch(setAlert('Postunuz silindi', 'success'));
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};

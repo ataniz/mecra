@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
-import { upvote, downvote } from '../../actions/post';
+import { upvote, downvote, deletePost } from '../../actions/post';
 
 import { Card, Container, Col, Row, Button, Badge } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -28,6 +28,7 @@ const PostItem = ({
   },
   upvote,
   downvote,
+  deletePost,
 }) => {
   const editorContentHtml = '';
   const voteSum = upvotes.length - downvotes.length;
@@ -37,7 +38,9 @@ const PostItem = ({
   //     EditorState.createWithContent(contentState)
   //   );
   // }
-
+  //<Link to={`/profile/${user}`} > AVATAR + username </Link
+  //
+  //
   //badge ekle
   return (
     <Container>
@@ -73,7 +76,11 @@ const PostItem = ({
               <Card.Text>Buraya yazi</Card.Text>
               {editorContentHtml}
               {!auth.loading && auth.user && user === auth.user._id && (
-                <Button variant="outline-danger" style={{ fontSize: 12 }}>
+                <Button
+                  variant="outline-danger"
+                  onClick={(e) => deletePost(_id)}
+                  style={{ fontSize: 12 }}
+                >
                   Postu Sil
                 </Button>
               )}
@@ -87,7 +94,7 @@ const PostItem = ({
                   <Badge variant="secondary">{comments.length}</Badge>
                 )}
               </Button>
-              <Card.Link href={`/post/${_id}`}>Post'a Git</Card.Link>
+              <Card.Link href={`/posts/${_id}`}>Post'a Git</Card.Link>
               <Card.Link href="#">Another Link</Card.Link>
             </Card.Body>
           </Card>
@@ -100,8 +107,13 @@ const PostItem = ({
 PostItem.propTypes = {
   post: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
+  upvote: PropTypes.func.isRequired,
+  downvote: PropTypes.func.isRequired,
+  deletePost: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({ auth: state.auth });
 
-export default connect(mapStateToProps, { upvote, downvote })(PostItem);
+export default connect(mapStateToProps, { upvote, downvote, deletePost })(
+  PostItem
+);
