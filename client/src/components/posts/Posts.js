@@ -16,7 +16,9 @@ const Posts = ({ getPosts, post: { posts, loading } }) => {
     <Fragment>
       <h1> Yazılar </h1>
       <h3>Aramıza hoşgeldin!</h3>
-      {posts.map(post => (<PostItem key={post._id} post={post} />))}
+      {posts.map((post) => (
+        <PostItem key={post._id} post={post} />
+      ))}
     </Fragment>
   );
 };

@@ -43,6 +43,13 @@ export default function (state = initialState, action) {
         post: null,
         loading: false,
       };
+    case UPDATE_VOTES:
+      return {
+        ...state,
+        posts: state.posts.map((post) =>
+          post._id === payload.id ? { ...post, votes: payload.votes } : post
+        ),
+      };
 
     default:
       return state;

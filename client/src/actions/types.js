@@ -18,3 +18,4 @@ export const UPDATE_POST = 'UPDATE_POST';
 export const CLEAR_POST = 'CLEAR_POST';
 export const POST_ERROR = 'POST_ERROR';
 export const ACCOUNT_DELETED = 'ACCOUNT_DELETED';
+export const UPDATE_VOTES = 'UPDATE_VOTES';

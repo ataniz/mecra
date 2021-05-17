@@ -1,6 +1,12 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { GET_POST, GET_POSTS, UPDATE_POST, POST_ERROR } from './types';
+import {
+  GET_POST,
+  GET_POSTS,
+  UPDATE_POST,
+  POST_ERROR,
+  UPDATE_VOTES,
+} from './types';
 
 // Get a post by id
 export const getPostById = (id) => async (dispatch) => {
@@ -20,7 +26,7 @@ export const getPostById = (id) => async (dispatch) => {
 };
 
 // Get a posts
-export const getPosts = (props) => async (dispatch) => {
+export const getPosts = () => async (dispatch) => {
   try {
     const res = await axios.get(`/api/posts`);
 
@@ -36,9 +42,43 @@ export const getPosts = (props) => async (dispatch) => {
   }
 };
 
+// Upvote
+export const upvote = (postId) => async (dispatch) => {
+  try {
+    const res = await axios.put(`/api/posts/upvote/${postId}`);
+
+    dispatch({
+      type: UPDATE_VOTES,
+      payload: { id, votes: res.data },
+    });
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Downvote
+export const downvote = (postId) => async (dispatch) => {
+  try {
+    const res = await axios.put(`/api/posts/downvote/${postId}`);
+
+    dispatch({
+      type: UPDATE_VOTES,
+      payload: { id, votes: res.data },
+    });
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
 // Create or update post
 export const createPost =
-  (title, rawState, edit = false) =>
+  (rawState, edit = false) =>
   async (dispatch) => {
     try {
       const config = {
@@ -47,7 +87,7 @@ export const createPost =
         },
       };
 
-      const res = await axios.post('/api/posts', title, rawState, config);
+      const res = await axios.post('/api/posts', rawState, config);
 
       if (!edit) {
         dispatch({
