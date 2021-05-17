@@ -3,6 +3,7 @@ import {
   GET_POST,
   GET_POSTS,
   UPDATE_POST,
+  UPDATE_VOTES,
   POST_ERROR,
   CLEAR_POST,
 } from '../actions/types';
@@ -49,6 +50,7 @@ export default function (state = initialState, action) {
         posts: state.posts.map((post) =>
           post._id === payload.id ? { ...post, votes: payload.votes } : post
         ),
+        loading: false,
       };
 
     default:

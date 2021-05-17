@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
+import { upvote, downvote } from '../../actions/post';
 
 import { Card, Container, Col, Row, Button, Badge } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,7 +17,17 @@ import {
 
 const PostItem = ({
   auth,
-  post: { _id, state, avatar, user, upvotes, downvotes, comments, date },
+  post: {
+    _id,
+    state,
+    avatar,
+    user,
+    votes: { upvotes, downvotes },
+    comments,
+    date,
+  },
+  upvote,
+  downvote,
 }) => {
   const editorContentHtml = '';
   const voteSum = upvotes.length - downvotes.length;
@@ -33,13 +44,21 @@ const PostItem = ({
       <Row>
         <Col md={2}>
           <Row>
-            <Button variant="outline-info" style={{ fontSize: 12 }}>
+            <Button
+              variant="outline-info"
+              onClick={(e) => upvote(_id)}
+              style={{ fontSize: 12 }}
+            >
               <FontAwesomeIcon icon={faArrowAltCircleUp} />
             </Button>
           </Row>
-          {voteSum > 0 && <Row>voteSum</Row>}
+          {voteSum > 0 && <Row className="m-auto">{voteSum}</Row>}
           <Row>
-            <Button variant="outline-info" style={{ fontSize: 12 }}>
+            <Button
+              variant="outline-info"
+              onClick={(e) => downvote(_id)}
+              style={{ fontSize: 12 }}
+            >
               <FontAwesomeIcon icon={faArrowAltCircleDown} />
             </Button>
           </Row>
@@ -51,9 +70,9 @@ const PostItem = ({
               <Card.Subtitle className="mb-2 text-muted">
                 <Moment format="DD/MM/YYYY">{date}</Moment>
               </Card.Subtitle>
-              <Card.Title>Buraya yazi</Card.Title>
+              <Card.Text>Buraya yazi</Card.Text>
               {editorContentHtml}
-              {!auth.loading && user === auth.user._id && (
+              {!auth.loading && auth.user && user === auth.user._id && (
                 <Button variant="outline-danger" style={{ fontSize: 12 }}>
                   Postu Sil
                 </Button>
@@ -85,4 +104,4 @@ PostItem.propTypes = {
 
 const mapStateToProps = (state) => ({ auth: state.auth });
 
-export default connect(mapStateToProps, {})(PostItem);
+export default connect(mapStateToProps, { upvote, downvote })(PostItem);

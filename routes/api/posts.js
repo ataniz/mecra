@@ -114,29 +114,30 @@ router.put('/upvote/:id', auth, async (req, res) => {
     const post = await Post.findById(req.params.id);
 
     if (
-      post.upvotes.filter((upvote) => upvote.user.toString() === req.user.id)
-        .length > 0
+      post.votes.upvotes.filter(
+        (upvote) => upvote.user.toString() === req.user.id
+      ).length > 0
     ) {
       return res.status(400).json({ msg: 'Post is already upvoted' });
     }
 
     //remove existing downvote
     if (
-      post.downvotes.filter(
+      post.votes.downvotes.filter(
         (downvote) => downvote.user.toString() === req.user.id
       ).length > 0
     ) {
-      post.downvotes = post.downvotes.filter(
+      post.votes.downvotes = post.votes.downvotes.filter(
         (vote) => vote.user.toString() !== req.user.id
       );
     }
 
     // unshift === push to beginning
-    post.upvotes.unshift({ user: req.user.id });
+    post.votes.upvotes.unshift({ user: req.user.id });
 
     await post.save();
 
-    res.json(post.upvotes);
+    res.json(post.votes);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
@@ -151,7 +152,7 @@ router.put('/downvote/:id', auth, async (req, res) => {
     const post = await Post.findById(req.params.id);
 
     if (
-      post.downvotes.filter(
+      post.votes.downvotes.filter(
         (downvote) => downvote.user.toString() === req.user.id
       ).length > 0
     ) {
@@ -160,19 +161,20 @@ router.put('/downvote/:id', auth, async (req, res) => {
 
     //remove existing upvote
     if (
-      post.upvotes.filter((upvote) => upvote.user.toString() === req.user.id)
-        .length > 0
+      post.votes.upvotes.filter(
+        (upvote) => upvote.user.toString() === req.user.id
+      ).length > 0
     ) {
-      post.upvotes = post.upvotes.filter(
+      post.votes.upvotes = post.votes.upvotes.filter(
         (vote) => vote.user.toString() !== req.user.id
       );
     }
 
-    post.downvotes.unshift({ user: req.user.id });
+    post.votes.downvotes.unshift({ user: req.user.id });
 
     await post.save();
 
-    res.json(post.downvotes);
+    res.json(post.votes);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');

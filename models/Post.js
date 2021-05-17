@@ -16,22 +16,24 @@ const PostSchema = new Schema({
   avatar: {
     type: String,
   },
-  upvotes: [
-    {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: 'users',
+  votes: {
+    upvotes: [
+      {
+        user: {
+          type: Schema.Types.ObjectId,
+          ref: 'users',
+        },
       },
-    },
-  ],
-  downvotes: [
-    {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: 'users',
+    ],
+    downvotes: [
+      {
+        user: {
+          type: Schema.Types.ObjectId,
+          ref: 'users',
+        },
       },
-    },
-  ],
+    ],
+  },
   comments: [
     {
       user: {

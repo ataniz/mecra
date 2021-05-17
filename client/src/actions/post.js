@@ -43,9 +43,9 @@ export const getPosts = () => async (dispatch) => {
 };
 
 // Upvote
-export const upvote = (postId) => async (dispatch) => {
+export const upvote = (id) => async (dispatch) => {
   try {
-    const res = await axios.put(`/api/posts/upvote/${postId}`);
+    const res = await axios.put(`/api/posts/upvote/${id}`);
 
     dispatch({
       type: UPDATE_VOTES,
@@ -60,9 +60,9 @@ export const upvote = (postId) => async (dispatch) => {
 };
 
 // Downvote
-export const downvote = (postId) => async (dispatch) => {
+export const downvote = (id) => async (dispatch) => {
   try {
-    const res = await axios.put(`/api/posts/downvote/${postId}`);
+    const res = await axios.put(`/api/posts/downvote/${id}`);
 
     dispatch({
       type: UPDATE_VOTES,
